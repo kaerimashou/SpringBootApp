@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${book.title}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/appStyle.css}"/>
+    <script type="text/javascript" th:src="@{/js/appScript.js}">
+        function assign(){
+            let select = document.getElementById('selectBorrower');
+            document.getElementById('person').value = select.options[select.selectedIndex].value
+            console.log(document.getElementById('person').value)
+        }
+    </script>
+</head>
+<body>
+<header th:insert="~{fragments/general :: header}"></header>
+<hr/>
+<p>Title: <span th:text="${book.title}"></span></p>
+<p>Author: <span th:text="${book.author}"></span></p>
+<p>Year: <span th:text="${book.bookYear}"></span></p>
+<hr/>
+<th:block>
+    <div th:if="${borrower != null}">
+        <p th:text="'Book now in use of '+${borrower.name}"></p>
+        <form method="POST" th:method="PATCH" th:action="@{{id}/free(id=${book.id})}">
+            <input name="_method" type="hidden" value="PATCH"/>
+            <input type="submit" class="button" value="Free book" id="free"/>
+        </form>
+    </div>
+    <div th:if="${borrower == null}">
+        <p th:text="'Book is free'"></p>
+        <form method="POST" th:method="PATCH" th:action="@{{id}/assign(id=${book.id})}" th:object="${newBorrower}">
+            <select th:field="*{id}" onchange="setAssignActive(this)">
+                <option value="0">Select customer</option>
+                <option th:each="person: ${people}" th:value="${person.id}" th:text="${person.name}"></option>
+            </select>
+            <input name="_method" type="hidden" value="PATCH"/>
+            <input type="submit" id="assign" class="button" value="Assign book" disabled/>
+        </form>
+    </div>
+</th:block>
+<hr/>
+<a id="edit" class="button" th:href="@{{id}/edit(id=${book.id})}" style="display: inline-block">Edit</a>
+<form method="POST" th:method="DELETE" th:action="@{{id}(id=${book.id})}" style="display: inline-block">
+    <input name="_method" type="hidden" value="DELETE"/>
+    <input type="submit"  class="button" id="delete" th:onclick="return deleteConfirm()" value="Delete">
+</form>
+</body>
+</html>

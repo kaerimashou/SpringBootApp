@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book list</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/appStyle.css}"/>
+</head>
+<body>
+    <header th:insert="~{fragments/general :: header}"></header>
+    <hr/>
+    <h1>List of books</h1>
+    <div th:if="${not#lists.isEmpty(books)}">
+        <th:block th:each="book: ${books}"
+                  th:with="bookDesc = ${book.title} + ', ' +${book.author} + ', ' + ${book.bookYear}">
+            <a th:href="@{books/{id}(id=${book.id})}" th:text="${bookDesc}"> Name </a>
+            <hr/>
+        </th:block>
+    </div>
+
+    <br>
+
+    <a id="add" class="button" th:href="@{books/new}">Add new</a>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+a.button, input[type=button], input[type=submit], input[type=reset] {
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+    margin-top: 10px;
+}
+
+a#add.button {
+    background-color: forestgreen;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+a#edit.button {
+    background-color: dodgerblue;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+input[type=button]#delete, input[type=submit]#delete, input[type=reset]#delete {
+    background-color: red;
+}
+
+input[type=button]#edit, input[type=submit]#edit, input[type=reset]#edit {
+    background-color: dodgerblue;
+}
+
+
+
+input[type=button]#free, input[type=submit]#free, input[type=reset]#free {
+    background-color: dodgerblue;
+    margin-top: 0;
+}
+
+input#assign {
+    background-color: dodgerblue;
+}
+
+input#assign:disabled {
+    background-color: gray;
+}
+
+div.error{
+    color: red;
+    font-size: 13px;
+}
+
+div#navbar > a {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+div#navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    max-width: 300px;
+}

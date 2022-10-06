@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/appStyle.css}">
+</head>
+<body>
+<header th:insert="~{fragments/general :: header}"></header>
+<hr/>
+<form method="POST" th:action="@{/people}" th:object="${person}">
+    <input type="hidden" id="id" th:field="*{id}">
+    <label for="name">Name</label>
+    <input name="name" type="text" id="name" th:field="*{name}" style="width: 200px"/>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name</div>
+    <br>
+    <label for="birthDate">Date of Birth</label>
+    <input name="birthDate" type="date" id="birthDate" min="01/01/1900" max="01/01/2022" th:field="*{birthDate}" th:value="*{birthDate}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Invalid Birth Year</div>
+    <br>
+    <label for="email">E-mail</label>
+    <input name="email" type="email" id="email" th:field="*{email}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Invalid Email</div>
+    <br>
+    <input type="submit" value="Update list" id="edit"/>
+</form>
+</body>
+</html>

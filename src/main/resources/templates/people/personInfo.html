@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${person.name}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/appStyle.css}">
+    <script type="text/javascript" th:src="@{/js/appScript.js}"></script>
+</head>
+<body>
+    <header th:insert="~{fragments/general :: header}"></header>
+    <hr/>
+<!-- Person info block -->
+    <p>Name: <span th:text="${person.name}"></span></p>
+    <p>Year of Birth: <span th:text="${person.getBirthDate}"></span></p>
+    <p>E-mail: <span th:text="${person.email}"></span></p>
+    <hr/>
+<!-- Borrowed books block -->
+    <div th:if="${#lists.isEmpty(books)}">
+    <p>This person didn't borrow any book</p>
+    </div>
+    <div th:if="${books!= null and not#lists.isEmpty(books)}">
+        <h3>Books:</h3>
+        <th:block th:with="bookDesc = ${book.title} + ', ' +${book.author} + ', ' + ${book.bookYear}"
+                  th:each="book: ${books}" >
+            <p th:text="${bookDesc}"> Book title</p>
+        </th:block>
+    </div>
+    <hr/>
+<!-- Buttons block -->
+    <a id="edit" class="button" th:href="@{{id}/edit(id=${person.id})}" style="display: inline-block">Edit</a>
+    <form method="POST" th:method="DELETE" th:action="@{{id}(id=${person.id})}" style="display: inline-block">
+        <input name="_method" type="hidden" value="DELETE"/>
+        <input type="submit" class="button" id="delete" th:onclick="return deleteConfirm()" value="Delete">
+    </form>
+</body>
+</html>

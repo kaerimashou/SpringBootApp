@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People list</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/appStyle.css}">
+</head>
+<body>
+<header th:insert="~{fragments/general :: header}"></header>
+<hr/>
+<div>
+    <h1>List of persons</h1>
+    <div th:if="${not#lists.isEmpty(people)}">
+        <th:block th:each="person: ${people}"
+                  th:with="personDesc = ${person.name} + ', ' +${person.birthDate}">
+            <a th:href="@{people/{id}(id=${person.id})}" th:text="${personDesc}"> Name </a>
+            <hr/>
+        </th:block>
+    </div>
+
+    <br>
+
+    <a class="button" id="add" th:href="@{people/new}">Add new</a>
+
+</div>
+</body>
+</html>
