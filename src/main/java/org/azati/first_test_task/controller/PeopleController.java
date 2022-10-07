@@ -26,31 +26,31 @@ public class PeopleController {
     }
 
     @GetMapping
-    public String index(Model model){
+    public String index(Model model) {
         List<Person> people = personService.getAll();
         model.addAttribute("people", people);
         return "people/peopleList";
     }
 
     @GetMapping("/{id}")
-    public String personInfo(@PathVariable String id, Model model){
+    public String personInfo(@PathVariable String id, Model model) {
         Long personId = Long.parseLong(id);
         Person person = personService.getById(personId);
         model.addAttribute("person", person);
         List<Book> borrowedBooks = personService.getPersonBorrowedBooks(person);
-        model.addAttribute("books",borrowedBooks);
+        model.addAttribute("books", borrowedBooks);
         return "people/personInfo";
     }
 
     @GetMapping("/new")
-    public String newPerson(Model model){
+    public String newPerson(Model model) {
         model.addAttribute("person", new Person());
         model.addAttribute("title", "New person");
         return "people/personEdit";
     }
 
     @GetMapping("/{id}/edit")
-    public String editPerson(@PathVariable String id, Model model){
+    public String editPerson(@PathVariable String id, Model model) {
         Long personId = Long.parseLong(id);
         Person person = personService.getById(personId);
         model.addAttribute("person", person);
@@ -60,20 +60,20 @@ public class PeopleController {
 
     @PostMapping
     public String updatePersonList(@ModelAttribute("person") @Valid Person person,
-                                 BindingResult bindingResult){
+                                   BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "people/personEdit";
         }
         personService.insert(person);
-        if (person.getId() != null){
+        if (person.getId() != null) {
             return "redirect:/people/" + person.getId();
         }
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
-    public String deletePerson(@PathVariable String id){
+    public String deletePerson(@PathVariable String id) {
         long personId = Long.parseLong(id);
         personService.delete(personId);
         return "redirect:/people";

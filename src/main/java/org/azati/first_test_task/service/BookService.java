@@ -17,22 +17,23 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> getAll(){
+    public List<Book> getAll() {
         return bookRepository.findAll();
     }
 
-    public Book getById(Long id){
+    public Book getById(Long id) {
         return bookRepository.findById(id).orElse(null);
     }
 
-    public void insert(Book book){
+    public void insert(Book book) {
         bookRepository.saveAndFlush(book);
     }
+
     public void delete(Long id) {
         bookRepository.deleteById(id);
     }
 
-    public Optional<Book> findCommon(Book book){
+    public Optional<Book> findCommon(Book book) {
         return bookRepository.findFirstByTitleAndAuthorAndBookYear(
           book.getTitle(),
           book.getAuthor(),

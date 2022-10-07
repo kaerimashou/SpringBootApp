@@ -32,7 +32,7 @@ public class Book {
     @NotEmpty(message = "Author must not be empty")
     private String author;
 
-    @Column(name="BOOK_YEAR")
+    @Column(name = "BOOK_YEAR")
     @Getter
     @Setter
     @NotNull(message = "Year must not be empty")
@@ -52,7 +52,7 @@ public class Book {
         this.borrower = borrower;
     }
 
-    public Book(Book book){
+    public Book(Book book) {
         this.id = book.id;
         this.author = book.author;
         this.bookYear = book.bookYear;

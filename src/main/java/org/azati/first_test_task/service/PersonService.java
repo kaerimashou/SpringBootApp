@@ -21,19 +21,19 @@ public class PersonService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Person> getAll(){
+    public List<Person> getAll() {
         return personRepository.findAll();
     }
 
-    public Person getById(Long id){
+    public Person getById(Long id) {
         return personRepository.findById(id).orElse(null);
     }
 
-    public void insert(Person person){
+    public void insert(Person person) {
         personRepository.saveAndFlush(person);
     }
 
-    public List<Book> getPersonBorrowedBooks(Person borrower){
+    public List<Book> getPersonBorrowedBooks(Person borrower) {
         return bookRepository.findAllByBorrower(borrower);
     }
 

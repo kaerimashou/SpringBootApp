@@ -26,8 +26,8 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
 
-        if (personService.getByEmail(person.getEmail()).isPresent()){
-            errors.rejectValue("email", "person.unique.violation.email" ,"This email is already taken");
+        if (personService.getByEmail(person.getEmail()).isPresent()) {
+            errors.rejectValue("email", "person.unique.violation.email", "This email is already taken");
         }
     }
 }

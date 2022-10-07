@@ -29,29 +29,29 @@ public class BooksController {
     }
 
     @GetMapping
-    public String index(Model model){
+    public String index(Model model) {
         List<Book> books = bookService.getAll();
         model.addAttribute("books", books);
         return "books/bookList";
     }
 
     @GetMapping("/{id}")
-    public String bookInfo(@PathVariable String id, Model model){
+    public String bookInfo(@PathVariable String id, Model model) {
         long bookId = Long.parseLong(id);
         Book book = bookService.getById(bookId);
         model.addAttribute("book", book);
-        if (book.getBorrower() == null){
+        if (book.getBorrower() == null) {
             List<Person> personList = personService.getAll();
             model.addAttribute("people", personList);
             model.addAttribute("newBorrower", new Person());
-        }else{
+        } else {
             model.addAttribute("borrower", book.getBorrower());
         }
         return "books/bookInfo";
     }
 
     @GetMapping("/{id}/edit")
-    public String editBook(@PathVariable String id, Model model){
+    public String editBook(@PathVariable String id, Model model) {
         long bookId = Long.parseLong(id);
         Book book = bookService.getById(bookId);
         model.addAttribute("book", book);
@@ -60,7 +60,7 @@ public class BooksController {
     }
 
     @GetMapping("/new")
-    public String newBook(Model model){
+    public String newBook(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("title", "New book");
         return "books/bookEdit";
@@ -68,20 +68,20 @@ public class BooksController {
 
     @PostMapping
     public String updateBookList(@Valid @ModelAttribute("book") Book book,
-                                 BindingResult bindingResult){
+                                 BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "books/bookEdit";
         }
         bookService.insert(book);
-        if (book.getId() != null){
+        if (book.getId() != null) {
             return "redirect:/books/" + book.getId();
         }
         return "redirect:/books";
     }
 
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable String id){
+    public String deleteBook(@PathVariable String id) {
         long bookId = Long.parseLong(id);
         bookService.delete(bookId);
         return "redirect:/books";
@@ -89,10 +89,10 @@ public class BooksController {
 
     @PatchMapping("/{id}/assign")
     public String assignBook(@PathVariable String id,
-                             @ModelAttribute("newBorrower") Person person){
+                             @ModelAttribute("newBorrower") Person person) {
         long bookId = Long.parseLong(id);
         long borrowerId = person.getId();
-        if(borrowerId != 0){
+        if (borrowerId != 0) {
             Book book = bookService.getById(bookId);
             Person borrower = personService.getById(borrowerId);
             book.setBorrower(borrower);
@@ -102,7 +102,7 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}/free")
-    public String freeBook(@PathVariable String id){
+    public String freeBook(@PathVariable String id) {
         Long bookId = Long.parseLong(id);
         Book book = bookService.getById(bookId);
         book.setBorrower(null);
