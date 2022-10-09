@@ -44,4 +44,7 @@ public class PersonService {
     public Optional<Person> getByEmail(String email) {
         return personRepository.findFirstByEmail(email);
     }
+    public Optional<Person> getByUsername(String username) {
+        return personRepository.findFirstByUsername(username);
+    }
 }

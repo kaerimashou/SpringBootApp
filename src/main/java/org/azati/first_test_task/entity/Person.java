@@ -21,6 +21,11 @@ public class Person {
     @Setter
     private Long id;
 
+    @Column(name = "USERNAME")
+    @Getter
+    @Setter
+    private String username;
+
     @Column(name = "NAME")
     @Getter
     @Setter
@@ -43,4 +48,9 @@ public class Person {
     @NotBlank(message = "Mail should be filled")
     @Email(message = "Enter valid mail")
     private String email;
+
+    @Column(name = "PASSWORD")
+    @Getter
+    @Setter
+    private String password;
 }
