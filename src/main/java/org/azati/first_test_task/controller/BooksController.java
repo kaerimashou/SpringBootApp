@@ -4,8 +4,9 @@ import org.azati.first_test_task.entity.Book;
 import org.azati.first_test_task.entity.Person;
 import org.azati.first_test_task.service.BookService;
 import org.azati.first_test_task.service.PersonService;
-import org.azati.first_test_task.util.BookValidator;
+import org.azati.first_test_task.validator.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/books")
+@RequestMapping(value={"/home/books", "/admin/books"})
 public class BooksController {
     private final BookService bookService;
     private final PersonService personService;
@@ -50,6 +51,7 @@ public class BooksController {
         return "books/bookInfo";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/{id}/edit")
     public String editBook(@PathVariable String id, Model model) {
         long bookId = Long.parseLong(id);
@@ -59,6 +61,7 @@ public class BooksController {
         return "books/bookEdit";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/new")
     public String newBook(Model model) {
         model.addAttribute("book", new Book());

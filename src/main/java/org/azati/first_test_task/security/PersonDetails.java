@@ -3,9 +3,11 @@ package org.azati.first_test_task.security;
 import lombok.Getter;
 import org.azati.first_test_task.entity.Person;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class PersonDetails implements UserDetails {
     @Getter
@@ -17,7 +19,9 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(
+          new SimpleGrantedAuthority(person.getRole().toString())
+        );
     }
 
     @Override
@@ -27,7 +31,7 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return person.getUsername();
+        return person.getUserName();
     }
 
     @Override

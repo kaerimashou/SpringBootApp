@@ -1,4 +1,4 @@
-package org.azati.first_test_task.util;
+package org.azati.first_test_task.validator;
 
 import org.azati.first_test_task.entity.Person;
 import org.azati.first_test_task.service.PersonService;
@@ -27,7 +27,11 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
 
         if (personService.getByEmail(person.getEmail()).isPresent()) {
-            errors.rejectValue("email", "person.unique.violation.email", "This email is already taken");
+            errors.rejectValue("email", "person.unique_violation.email", "This email is already taken");
+        }
+
+        if (personService.getByUsername(person.getUserName()).isPresent()) {
+            errors.rejectValue("userName", "person.unique_violation.userName", "This user name is already taken");
         }
     }
 }

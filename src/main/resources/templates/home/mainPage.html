@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Book control</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/appStyle.css}">
+</head>
+<body>
+<header th:insert="~{fragments/general :: header}"></header>
+<div class="row gutters-sm" style="margin-top: 80px;">
+    <div class="col-md-4" style="width: 30rem;">
+        <div class="card mb-5 ml-3">
+            <div class="card-body">
+                <div>
+                    <h1 class="mb-0">Profile Info</h1>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <p th:text="${person.userName}">User Name</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <p th:text="${person.email}"></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Birth Date</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <p th:text="${person.birthDate}"></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a class="btn btn-info" th:href="@{/people/edit}">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" style="width: 30rem;">
+        <div class="card mb-5">
+            <div class="card-body">
+                <div>
+                    <h1 class="mb-0">Borrowed books</h1>
+                </div>
+                <hr>
+                <div class="row">
+                    <th:block th:each="book: ${person.borrowedBooks}"
+                              th:with="bookDesc = ${book.title} + ', ' +${book.author} + ', ' + ${book.bookYear}">
+                        <div class="col-sm-9 text-secondary">
+                            <a th:href="@{/books/{id}(id=${book.id})}" th:text="${bookDesc}">Book Name</a>
+                            <hr>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.1/cjs/popper.min.js"
+        integrity="sha256-T3bYsIPyOLpEfeZOX4M7J59ZoDMzuYFUsPiSN3Xcc2M=" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>

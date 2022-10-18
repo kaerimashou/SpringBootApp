@@ -13,12 +13,10 @@ import java.util.Optional;
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
-    private final BookRepository bookRepository;
 
     @Autowired
-    public PersonService(PersonRepository personRepository, BookRepository bookRepository) {
+    public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
-        this.bookRepository = bookRepository;
     }
 
     public List<Person> getAll() {
@@ -33,10 +31,6 @@ public class PersonService {
         personRepository.saveAndFlush(person);
     }
 
-    public List<Book> getPersonBorrowedBooks(Person borrower) {
-        return bookRepository.findAllByBorrower(borrower);
-    }
-
     public void delete(Long id) {
         personRepository.deleteById(id);
     }
@@ -45,6 +39,6 @@ public class PersonService {
         return personRepository.findFirstByEmail(email);
     }
     public Optional<Person> getByUsername(String username) {
-        return personRepository.findFirstByUsername(username);
+        return personRepository.findFirstByUserName(username);
     }
 }

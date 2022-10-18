@@ -12,35 +12,35 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "BOOK")
+@Getter
+@Setter
 public class Book {
     @Id
     @GeneratedValue(generator = "increment")
-    @Getter
-    @Setter
     private Long id;
 
     @Column(name = "TITLE")
-    @Getter
-    @Setter
     @NotEmpty(message = "Title must not be empty")
     @Size(min = 2, max = 30, message = "Title should be between 2 and 30 characters")
     private String title;
 
     @Column(name = "AUTHOR")
-    @Getter
-    @Setter
     @NotEmpty(message = "Author must not be empty")
     private String author;
 
     @Column(name = "BOOK_YEAR")
-    @Getter
-    @Setter
     @NotNull(message = "Year must not be empty")
     @Min(value = 0, message = "Year cannot be less than 0")
     @Max(value = 2022, message = "Year cannot be greater than 2022")
     private Integer bookYear;
 
-    @OneToOne
+    @Column(name = "COVER")
+    private String cover;
+
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @ManyToOne
     @JoinColumn(name = "borrower_id")
     private Person borrower;
 

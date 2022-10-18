@@ -2,9 +2,13 @@ package org.azati.first_test_task.controller;
 
 import org.azati.first_test_task.entity.Book;
 import org.azati.first_test_task.entity.Person;
+import org.azati.first_test_task.security.PersonDetails;
 import org.azati.first_test_task.service.PersonService;
-import org.azati.first_test_task.util.PersonValidator;
+import org.azati.first_test_task.service.RegistrationService;
+import org.azati.first_test_task.validator.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,7 +41,7 @@ public class PeopleController {
         Long personId = Long.parseLong(id);
         Person person = personService.getById(personId);
         model.addAttribute("person", person);
-        List<Book> borrowedBooks = personService.getPersonBorrowedBooks(person);
+        List<Book> borrowedBooks = person.getBorrowedBooks();
         model.addAttribute("books", borrowedBooks);
         return "people/personInfo";
     }
@@ -49,10 +53,11 @@ public class PeopleController {
         return "people/personEdit";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editPerson(@PathVariable String id, Model model) {
-        Long personId = Long.parseLong(id);
-        Person person = personService.getById(personId);
+    @GetMapping("/edit")
+    public String editPerson(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        Person person = personDetails.getPerson();
         model.addAttribute("person", person);
         model.addAttribute("title", "Edit of " + person.getName());
         return "people/personEdit";
@@ -66,10 +71,7 @@ public class PeopleController {
             return "people/personEdit";
         }
         personService.insert(person);
-        if (person.getId() != null) {
-            return "redirect:/people/" + person.getId();
-        }
-        return "redirect:/people";
+        return "redirect:/home";
     }
 
     @DeleteMapping("/{id}")

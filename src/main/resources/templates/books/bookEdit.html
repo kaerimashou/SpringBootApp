@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en"
-    xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/appStyle.css}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.css"
+          integrity="sha512-ClXpwbczwauhl7XC16/EFu3grIlYTpqTYOwqwAi7rNSqxmTqCpE8VS3ovG+qi61GoxSLnuomxzFXDNcPV1hvCQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-    <header th:insert="~{fragments/general :: header}"></header>
-    <hr/>
-    <form method="POST" th:action="@{/books}" th:object="${book}">
-        <input type="hidden" id="id" th:field="*{id}">
-        <label for="title">Name</label>
-        <input name="title" type="text" id="title" th:field="*{title}"/>
-        <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title</div>
-        <br>
-        <label for="author">Author</label>
-        <input name="author" type="text" id="author" th:field="*{author}"/>
-        <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Invalid Author</div>
-        <br>
-        <label for="year">Year</label>
-        <input name="year" type="number" id="year" th:field="*{bookYear}"/>
-        <div style="color: red" th:if="${#fields.hasErrors('bookYear')}" th:errors="*{bookYear}">Invalid bookYear</div>
-        <br>
-        <input name="borrower" type="hidden" id="borrower" th:field="*{borrower}">
-        <ul th:if="${#fields.hasErrors('global')}">
-            <li style="color: red" th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error"></li>
-        </ul>
-        <input type="submit" value="Update list" id="edit"/>
-    </form>
+<header th:insert="~{fragments/general :: header}"></header>
+<hr/>
+<form method="POST" th:action="@{/books}" th:object="${book}" class="container-fluid align-content-start">
+    <input type="hidden" id="id" th:field="*{id}">
+    <input class="form-control d-flex" type="text" th:field="*{title}" placeholder="Title"/>
+    <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title</div>
+    <br>
+    <input class="form-control" type="text" th:field="*{author}" placeholder="Author"/>
+    <div class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Invalid Author</div>
+    <br>
+    <input class="date-own form-control" type="number" th:field="*{bookYear}" id="datepicker" placeholder="Book year"/>
+    <div class="text-danger" th:if="${#fields.hasErrors('bookYear')}" th:errors="*{bookYear}">Invalid bookYear</div>
+    <br>
+    <input name="borrower" type="hidden" id="borrower" th:field="*{borrower}">
+    <ul th:if="${#fields.hasErrors('global')}">
+        <li style="color: red" th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error"></li>
+    </ul>
+    <input type="submit" value="Update list" id="edit"/>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.1/cjs/popper.min.js"
+        integrity="sha256-T3bYsIPyOLpEfeZOX4M7J59ZoDMzuYFUsPiSN3Xcc2M=" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>

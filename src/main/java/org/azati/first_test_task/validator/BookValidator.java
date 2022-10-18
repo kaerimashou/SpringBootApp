@@ -1,9 +1,8 @@
-package org.azati.first_test_task.util;
+package org.azati.first_test_task.validator;
 
 import org.azati.first_test_task.entity.Book;
 import org.azati.first_test_task.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
