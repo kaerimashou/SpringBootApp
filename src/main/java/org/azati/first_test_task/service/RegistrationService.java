@@ -1,7 +1,7 @@
 package org.azati.first_test_task.service;
 
 import org.azati.first_test_task.entity.Person;
-import org.azati.first_test_task.validator.PersonValidator;
+import org.azati.first_test_task.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ public class RegistrationService {
     @Transactional
     public void register(Person person){
         person.setPassword(passwordEncoder.encode(person.getPassword()));
+        person.setRole(Role.ROLE_USER);
         personService.insert(person);
     }
 }

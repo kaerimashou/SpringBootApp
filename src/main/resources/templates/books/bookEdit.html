@@ -14,21 +14,35 @@
           integrity="sha512-ClXpwbczwauhl7XC16/EFu3grIlYTpqTYOwqwAi7rNSqxmTqCpE8VS3ovG+qi61GoxSLnuomxzFXDNcPV1hvCQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
-<body>
+<body style="margin-top: 100px">
 <header th:insert="~{fragments/general :: header}"></header>
 <hr/>
 <form method="POST" th:action="@{/books}" th:object="${book}" class="container-fluid align-content-start">
     <input type="hidden" id="id" th:field="*{id}">
-    <input class="form-control d-flex" type="text" th:field="*{title}" placeholder="Title"/>
-    <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title</div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input class="form-control" type="text" id="title" th:field="*{title}" placeholder="Title">
+        <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{author}">Invalid Title</div>
+    </div>
     <br>
-    <input class="form-control" type="text" th:field="*{author}" placeholder="Author"/>
-    <div class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Invalid Author</div>
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input class="form-control" type="text" id="author" th:field="*{author}" placeholder="Author">
+        <div class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Invalid Author</div>
+    </div>
     <br>
-    <input class="date-own form-control" type="number" th:field="*{bookYear}" id="datepicker" placeholder="Book year"/>
-    <div class="text-danger" th:if="${#fields.hasErrors('bookYear')}" th:errors="*{bookYear}">Invalid bookYear</div>
+    <div class="form-group">
+        <label for="bookYear">Book year</label>
+        <input class="date-own form-control" type="number" th:field="*{bookYear}" id="bookYear" placeholder="Book year">
+        <div class="text-danger" th:if="${#fields.hasErrors('bookYear')}" th:errors="*{bookYear}">Invalid bookYear</div>
+
+    </div>
     <br>
-    <input name="borrower" type="hidden" id="borrower" th:field="*{borrower}">
+    <div class="form-group">
+        <label for="description">Example textarea</label>
+        <textarea class="form-control" id="description" rows="7" th:field="*{description}"></textarea>
+    </div>
+    <input name="borrower" type="hidden" id="borrower" th:field="*{borrower}" th:value="*{borrower}">
     <ul th:if="${#fields.hasErrors('global')}">
         <li style="color: red" th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error"></li>
     </ul>

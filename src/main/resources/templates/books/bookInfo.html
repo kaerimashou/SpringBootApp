@@ -86,40 +86,8 @@
         </div>
     </div>
 </div>
-<!--<div class="container">-->
-<!--    <div class="row">-->
-<!--        <div class="col-xs-4" style="border:0 solid gray; width: 30rem;">-->
-<!--            <p>Title: <span th:text="${book.title}"></span></p>-->
-<!--            <p>Author: <span th:text="${book.author}"></span></p>-->
-<!--            <p>Year: <span th:text="${book.bookYear}"></span></p>-->
-<!--            <p>Description: <span th:text="${book.description}"></span></p>-->
-<!--            <th:block>-->
-<!--                <div th:if="${borrower != null}">-->
-<!--                    <p th:text="'Book now in use of '+${borrower.name}"></p>-->
-<!--                    <form method="POST" th:method="PATCH" th:action="@{{id}/free(id=${book.id})}">-->
-<!--                        <input name="_method" type="hidden" value="PATCH"/>-->
-<!--                        <input type="submit" class="btn btn-outline-primary" value="Free book" id="free"/>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <div th:if="${borrower == null}">-->
-<!--                    <p th:text="'Book is free'"></p>-->
-<!--                    <form method="POST" th:method="PATCH" th:action="@{{id}/assign(id=${book.id})}"-->
-<!--                          th:object="${newBorrower}">-->
-<!--                        <select class="form-select" th:field="*{id}" onchange="setAssignActive(this)">-->
-<!--                            <option value="0">Select customer</option>-->
-<!--                            <option th:each="person: ${people}" th:value="${person.id}"-->
-<!--                                    th:text="${person.name}"></option>-->
-<!--                        </select>-->
-<!--                        <input name="_method" type="hidden" value="PATCH"/>-->
-<!--                        <input type="submit" class="btn btn-outline-primary" id="assign" value="Assign book" disabled/>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </th:block>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <hr/>
-<div>
+<div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
     <a class="btn btn-info" th:href="@{{id}/edit(id=${book.id})}" style="display: inline-block">Edit</a>
     <form method="POST" th:method="DELETE" th:action="@{{id}(id=${book.id})}" style="display: inline-block">
         <input name="_method" type="hidden" value="DELETE"/>

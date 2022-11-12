@@ -1,7 +1,6 @@
 package org.azati.first_test_task.controller;
 
 import org.azati.first_test_task.entity.Person;
-import org.azati.first_test_task.service.PersonService;
 import org.azati.first_test_task.service.RegistrationService;
 import org.azati.first_test_task.validator.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +24,22 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "auth/login";
     }
 
     @GetMapping("/register")
-    public String registration(@ModelAttribute("person") Person person){
+    public String registration(@ModelAttribute("person") Person person) {
         return "auth/register";
     }
 
     @PostMapping("/register")
     public String performRegistration(@ModelAttribute("person") @Valid Person person,
-                                      BindingResult result){
+                                      BindingResult result) {
         personValidator.validate(person, result);
         if (result.hasErrors()) {
             return "auth/register";
-        }else {
+        } else {
             registrationService.register(person);
             return "redirect:/auth/login";
         }

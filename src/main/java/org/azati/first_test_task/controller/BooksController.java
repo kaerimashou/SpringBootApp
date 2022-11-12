@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping(value={"/home/books", "/admin/books"})
+@RequestMapping("/books")
 public class BooksController {
     private final BookService bookService;
     private final PersonService personService;
@@ -69,6 +69,7 @@ public class BooksController {
         return "books/bookEdit";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @PostMapping
     public String updateBookList(@Valid @ModelAttribute("book") Book book,
                                  BindingResult bindingResult) {
@@ -83,6 +84,7 @@ public class BooksController {
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable String id) {
         long bookId = Long.parseLong(id);
@@ -90,6 +92,7 @@ public class BooksController {
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PatchMapping("/{id}/assign")
     public String assignBook(@PathVariable String id,
                              @ModelAttribute("newBorrower") Person person) {
@@ -104,6 +107,7 @@ public class BooksController {
         return "redirect:/books/{id}";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @PatchMapping("/{id}/free")
     public String freeBook(@PathVariable String id) {
         Long bookId = Long.parseLong(id);
